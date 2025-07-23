@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
-import StrategicInsightEngine from '../ai/StrategicInsightEngine';
+import EnhancedStrategicInsightEngine from '../ai/EnhancedStrategicInsightEngine';
 import PredictiveAnalytics from '../ai/PredictiveAnalytics';
 import DesignRecommendationEngine from '../ai/DesignRecommendationEngine';
 
@@ -35,13 +35,13 @@ const AIStrategy = () => {
   const renderActiveComponent = () => {
     switch (activeTab) {
       case 'insights':
-        return <StrategicInsightEngine />;
+        return <EnhancedStrategicInsightEngine />;
       case 'predictions':
         return <PredictiveAnalytics />;
       case 'recommendations':
         return <DesignRecommendationEngine />;
       default:
-        return <StrategicInsightEngine />;
+        return <EnhancedStrategicInsightEngine />;
     }
   };
 
