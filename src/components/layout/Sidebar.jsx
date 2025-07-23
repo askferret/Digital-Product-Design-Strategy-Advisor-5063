@@ -1,30 +1,39 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-import {motion, AnimatePresence} from 'framer-motion';
+import { NavLink } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
+import { useAuthContext } from '../../context/AuthContext';
 
-const {FiHome, FiMessageCircle, FiDatabase, FiTrendingUp, FiUser, FiPlay} = FiIcons;
+const { FiHome, FiMessageCircle, FiDatabase, FiTrendingUp, FiUser, FiPlay, FiUsers } = FiIcons;
 
-const navigation = [
-  {name: 'Dashboard', href: '/', icon: FiHome},
-  {name: 'Get Started', href: '/get-started', icon: FiPlay},
-  {name: 'Strategy Chat', href: '/chat', icon: FiMessageCircle},
-  {name: 'Data Sources', href: '/data-sources', icon: FiDatabase},
-  {name: 'Insights', href: '/insights', icon: FiTrendingUp},
-  {name: 'Profile', href: '/profile', icon: FiUser},
-];
+const Sidebar = ({ isOpen, onClose }) => {
+  const { hasPermission, PERMISSIONS } = useAuthContext();
 
-const Sidebar = ({isOpen, onClose}) => {
+  const navigation = [
+    { name: 'Dashboard', href: '/', icon: FiHome },
+    { name: 'Get Started', href: '/get-started', icon: FiPlay },
+    { name: 'Strategy Chat', href: '/chat', icon: FiMessageCircle, permission: PERMISSIONS.USE_CHAT },
+    { name: 'Data Sources', href: '/data-sources', icon: FiDatabase, permission: PERMISSIONS.VIEW_DATA_SOURCES },
+    { name: 'Insights', href: '/insights', icon: FiTrendingUp, permission: PERMISSIONS.VIEW_INSIGHTS },
+    { name: 'Users', href: '/users', icon: FiUsers, permission: PERMISSIONS.VIEW_USERS },
+    { name: 'Profile', href: '/profile', icon: FiUser },
+  ];
+
+  // Filter navigation items based on permissions
+  const filteredNavigation = navigation.filter(item => 
+    !item.permission || hasPermission(item.permission)
+  );
+
   return (
     <>
       {/* Mobile Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            exit={{opacity: 0}}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
             onClick={onClose}
           />
@@ -38,17 +47,17 @@ const Sidebar = ({isOpen, onClose}) => {
         } lg:z-0`}
       >
         <nav className="p-4 space-y-2">
-          {navigation.map((item, index) => (
+          {filteredNavigation.map((item, index) => (
             <motion.div
               key={item.name}
-              initial={{x: -20, opacity: 0}}
-              animate={{x: 0, opacity: 1}}
-              transition={{delay: index * 0.1}}
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: index * 0.1 }}
             >
               <NavLink
                 to={item.href}
                 onClick={() => window.innerWidth < 1024 && onClose()}
-                className={({isActive}) =>
+                className={({ isActive }) =>
                   `flex items-center space-x-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400 border-r-2 border-primary-500'

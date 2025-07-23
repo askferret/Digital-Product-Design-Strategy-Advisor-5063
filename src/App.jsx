@@ -1,5 +1,5 @@
 import React from 'react'
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import DashboardLayout from './components/layout/DashboardLayout'
 import Dashboard from './components/pages/Dashboard'
 import Chat from './components/pages/Chat'
@@ -7,6 +7,7 @@ import DataSources from './components/pages/DataSources'
 import Insights from './components/pages/Insights'
 import Profile from './components/pages/Profile'
 import GetStarted from './components/pages/GetStarted'
+import Users from './components/pages/Users'
 
 // Strategic Compass Wizard Pages
 import Layout from './components/Layout'
@@ -27,6 +28,7 @@ function App() {
         <Route path="chat" element={<Chat />} />
         <Route path="data-sources" element={<DataSources />} />
         <Route path="insights" element={<Insights />} />
+        <Route path="users" element={<Users />} />
         <Route path="profile" element={<Profile />} />
       </Route>
 
