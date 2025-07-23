@@ -5,6 +5,7 @@ import Dashboard from './components/pages/Dashboard'
 import Chat from './components/pages/Chat'
 import DataSources from './components/pages/DataSources'
 import Insights from './components/pages/Insights'
+import Analytics from './components/pages/Analytics'
 import Profile from './components/pages/Profile'
 import GetStarted from './components/pages/GetStarted'
 import Users from './components/pages/Users'
@@ -28,6 +29,7 @@ function App() {
         <Route path="chat" element={<Chat />} />
         <Route path="data-sources" element={<DataSources />} />
         <Route path="insights" element={<Insights />} />
+        <Route path="analytics" element={<Analytics />} />
         <Route path="users" element={<Users />} />
         <Route path="profile" element={<Profile />} />
       </Route>

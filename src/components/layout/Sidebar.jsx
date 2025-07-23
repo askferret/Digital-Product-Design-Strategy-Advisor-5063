@@ -5,7 +5,16 @@ import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 import { useAuthContext } from '../../context/AuthContext';
 
-const { FiHome, FiMessageCircle, FiDatabase, FiTrendingUp, FiUser, FiPlay, FiUsers } = FiIcons;
+const { 
+  FiHome, 
+  FiMessageCircle, 
+  FiDatabase, 
+  FiTrendingUp, 
+  FiUser, 
+  FiPlay, 
+  FiUsers,
+  FiBarChart3
+} = FiIcons;
 
 const Sidebar = ({ isOpen, onClose }) => {
   const { hasPermission, PERMISSIONS } = useAuthContext();
@@ -16,6 +25,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { name: 'Strategy Chat', href: '/chat', icon: FiMessageCircle, permission: PERMISSIONS.USE_CHAT },
     { name: 'Data Sources', href: '/data-sources', icon: FiDatabase, permission: PERMISSIONS.VIEW_DATA_SOURCES },
     { name: 'Insights', href: '/insights', icon: FiTrendingUp, permission: PERMISSIONS.VIEW_INSIGHTS },
+    { name: 'Analytics', href: '/analytics', icon: FiBarChart3, permission: PERMISSIONS.VIEW_INSIGHTS },
     { name: 'Users', href: '/users', icon: FiUsers, permission: PERMISSIONS.VIEW_USERS },
     { name: 'Profile', href: '/profile', icon: FiUser },
   ];
