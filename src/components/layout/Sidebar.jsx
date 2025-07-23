@@ -13,7 +13,8 @@ const {
   FiUser, 
   FiPlay, 
   FiUsers,
-  FiBarChart3
+  FiBarChart3,
+  FiBrain
 } = FiIcons;
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -23,6 +24,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { name: 'Dashboard', href: '/', icon: FiHome },
     { name: 'Get Started', href: '/get-started', icon: FiPlay },
     { name: 'Strategy Chat', href: '/chat', icon: FiMessageCircle, permission: PERMISSIONS.USE_CHAT },
+    { name: 'AI Strategy', href: '/ai-strategy', icon: FiBrain, permission: PERMISSIONS.VIEW_INSIGHTS },
     { name: 'Data Sources', href: '/data-sources', icon: FiDatabase, permission: PERMISSIONS.VIEW_DATA_SOURCES },
     { name: 'Insights', href: '/insights', icon: FiTrendingUp, permission: PERMISSIONS.VIEW_INSIGHTS },
     { name: 'Analytics', href: '/analytics', icon: FiBarChart3, permission: PERMISSIONS.VIEW_INSIGHTS },
@@ -77,6 +79,11 @@ const Sidebar = ({ isOpen, onClose }) => {
               >
                 <SafeIcon icon={item.icon} className="w-5 h-5" />
                 <span>{item.name}</span>
+                {item.name === 'AI Strategy' && (
+                  <span className="ml-auto bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400 text-xs px-2 py-1 rounded-full">
+                    New
+                  </span>
+                )}
               </NavLink>
             </motion.div>
           ))}
