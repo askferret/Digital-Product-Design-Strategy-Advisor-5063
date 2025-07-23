@@ -6,6 +6,8 @@ import Chat from './components/pages/Chat'
 import DataSources from './components/pages/DataSources'
 import Insights from './components/pages/Insights'
 import Profile from './components/pages/Profile'
+import GetStarted from './components/pages/GetStarted'
+
 // Strategic Compass Wizard Pages
 import Layout from './components/Layout'
 import Welcome from './pages/Welcome'
@@ -21,6 +23,7 @@ function App() {
       {/* Dashboard routes with dashboard layout */}
       <Route path="/" element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
+        <Route path="get-started" element={<GetStarted />} />
         <Route path="chat" element={<Chat />} />
         <Route path="data-sources" element={<DataSources />} />
         <Route path="insights" element={<Insights />} />

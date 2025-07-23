@@ -4,12 +4,19 @@ import {useNavigate} from 'react-router-dom';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const {FiMessageCircle, FiDatabase, FiDownload, FiTarget, FiTrendingUp, FiUsers, FiCompass} = FiIcons;
+const {FiMessageCircle, FiDatabase, FiDownload, FiTarget, FiTrendingUp, FiUsers, FiCompass, FiPlay} = FiIcons;
 
 const QuickActions = () => {
   const navigate = useNavigate();
 
   const actions = [
+    {
+      title: 'Get Started',
+      description: 'Complete your onboarding journey',
+      icon: FiPlay,
+      color: 'green',
+      action: () => navigate('/get-started')
+    },
     {
       title: 'Start Strategy Session',
       description: 'Get AI-powered design advice',
@@ -28,22 +35,15 @@ const QuickActions = () => {
       title: 'Connect Data Source',
       description: 'Add Figma, analytics, or research data',
       icon: FiDatabase,
-      color: 'green',
+      color: 'blue',
       action: () => navigate('/data-sources')
     },
     {
       title: 'View Latest Insights',
       description: 'See personalized recommendations',
       icon: FiTrendingUp,
-      color: 'blue',
-      action: () => navigate('/insights')
-    },
-    {
-      title: 'Export Strategy Report',
-      description: 'Download your strategic analysis',
-      icon: FiDownload,
       color: 'orange',
-      action: () => {}
+      action: () => navigate('/insights')
     }
   ];
 
