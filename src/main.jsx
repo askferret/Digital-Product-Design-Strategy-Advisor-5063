@@ -1,24 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter } from 'react-router-dom'
+import {HashRouter} from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
-import { AppProvider } from './context/AppContext'
-import { ThemeProvider } from './context/ThemeContext'
-import { ChatProvider } from './context/ChatContext'
-import { DataProvider } from './context/DataContext'
+import {ThemeProvider} from './context/ThemeContext'
+import {ChatProvider} from './context/ChatContext'
+import {DataProvider} from './context/DataContext'
+import {AppProvider} from './context/AppContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HashRouter>
       <ThemeProvider>
-        <AppProvider>
-          <DataProvider>
-            <ChatProvider>
+        <DataProvider>
+          <ChatProvider>
+            <AppProvider>
               <App />
-            </ChatProvider>
-          </DataProvider>
-        </AppProvider>
+            </AppProvider>
+          </ChatProvider>
+        </DataProvider>
       </ThemeProvider>
     </HashRouter>
   </React.StrictMode>,

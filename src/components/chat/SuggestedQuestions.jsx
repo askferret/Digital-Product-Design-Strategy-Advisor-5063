@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { useChatContext } from '../../context/ChatContext';
 
 const SuggestedQuestions = ({ onQuestionClick }) => {
-  const { suggestedQuestions } = useChatContext();
+  const { messages, suggestedQuestions } = useChatContext();
 
-  // Add some predefined workflow questions to make it clear they exist
+  // These are the full predefined workflow questions for easy testing
   const workflowQuestions = [
     "How do we define measurable KPIs for our designs that meaningfully address the intersection of our business goals and user needs?",
     "How can we track and measure the direct impact of design choices on long-term engagement, especially when user behavior is influenced by factors outside our control?",
@@ -14,8 +14,8 @@ const SuggestedQuestions = ({ onQuestionClick }) => {
     "Our design system is becoming unwieldy as we scale. How should we evolve it to support multiple products while maintaining consistency?"
   ];
 
-  // Use workflow questions if no messages exist, otherwise use context-aware suggestions
-  const questionsToShow = suggestedQuestions.length > 0 ? suggestedQuestions : workflowQuestions;
+  // Use context-aware suggestions if available, otherwise use the predefined workflow questions
+  const questionsToShow = messages.length > 0 ? suggestedQuestions : workflowQuestions;
 
   return (
     <div className="space-y-2 max-w-4xl mx-auto">

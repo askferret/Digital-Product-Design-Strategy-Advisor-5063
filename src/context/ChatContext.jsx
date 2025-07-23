@@ -49,7 +49,7 @@ export const ChatProvider = ({ children }) => {
     const matchedWorkflow = findWorkflowByQuestion(content);
     
     console.log('User question:', content);
-    console.log('Matched workflow:', matchedWorkflow);
+    console.log('Matched workflow:', matchedWorkflow ? matchedWorkflow.initialQuestion : 'No match');
 
     setTimeout(() => {
       if (matchedWorkflow && matchedWorkflow.responses.length > 0) {
@@ -59,7 +59,7 @@ export const ChatProvider = ({ children }) => {
           id: `assistant-${Date.now()}`, // Generate new ID
           timestamp: new Date() // Update timestamp to current time
         };
-        console.log('Using predefined response:', response);
+        console.log('Using predefined response for:', matchedWorkflow.initialQuestion);
         addMessage(response);
       } else {
         // Generate a dynamic response

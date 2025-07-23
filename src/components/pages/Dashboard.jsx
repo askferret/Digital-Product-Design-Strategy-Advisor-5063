@@ -1,13 +1,13 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import {motion} from 'framer-motion';
+import {useNavigate} from 'react-router-dom';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 import MetricsCard from '../dashboard/MetricsCard';
 import RecentActivity from '../dashboard/RecentActivity';
 import QuickActions from '../dashboard/QuickActions';
 
-const { FiMessageCircle, FiTrendingUp, FiDatabase, FiTarget } = FiIcons;
+const {FiMessageCircle, FiTrendingUp, FiDatabase, FiTarget, FiCompass} = FiIcons;
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -51,8 +51,8 @@ const Dashboard = () => {
     <div className="space-y-6">
       {/* Hero Section */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{opacity: 0, y: 20}}
+        animate={{opacity: 1, y: 0}}
         className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl p-6 sm:p-8 text-white"
       >
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">Welcome back, John!</h1>
@@ -66,6 +66,13 @@ const Dashboard = () => {
             className="bg-white text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors text-center"
           >
             Start Strategy Session
+          </button>
+          <button
+            onClick={() => navigate('/compass')}
+            className="border border-primary-300 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-500 transition-colors text-center flex items-center justify-center space-x-2"
+          >
+            <SafeIcon icon={FiCompass} className="w-5 h-5" />
+            <span>Strategic Compass</span>
           </button>
           <button
             onClick={() => navigate('/data-sources')}

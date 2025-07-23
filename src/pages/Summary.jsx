@@ -1,38 +1,41 @@
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useAppContext } from '../context/AppContext';
+import React, {useRef} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {motion} from 'framer-motion';
+import {useAppContext} from '../context/AppContext';
 import Button from '../components/Button';
 import SafeIcon from '../common/SafeIcon';
-import { FiArrowLeft, FiDownload, FiRefreshCw, FiCheckCircle } from 'react-icons/fi';
-import { jsPDF } from 'jspdf';
+import {FiArrowLeft, FiDownload, FiRefreshCw, FiCheckCircle} from 'react-icons/fi';
+import {jsPDF} from 'jspdf';
 import * as htmlToImage from 'html-to-image';
 
 const Summary = () => {
   const navigate = useNavigate();
-  const { businessGoal, finalSelectedPath, resetAll } = useAppContext();
+  const {businessGoal, finalSelectedPath, resetAll} = useAppContext();
   const summaryRef = useRef(null);
-  
+
   if (!finalSelectedPath) {
-    navigate('/strategic-paths');
+    navigate('/compass/strategic-paths');
     return null;
   }
-  
+
   const handleExportPDF = async () => {
     if (!summaryRef.current) return;
-    
+
     try {
-      const dataUrl = await htmlToImage.toPng(summaryRef.current, { quality: 1 });
+      const dataUrl = await htmlToImage.toPng(summaryRef.current, {
+        quality: 1
+      });
+
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
       });
-      
+
       const imgProps = pdf.getImageProperties(dataUrl);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      
+
       pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('strategic-design-path.pdf');
     } catch (error) {
@@ -40,19 +43,19 @@ const Summary = () => {
       alert('Failed to export PDF. Please try again.');
     }
   };
-  
+
   const handleStartOver = () => {
     if (window.confirm('Are you sure you want to start over? All progress will be lost.')) {
       resetAll();
-      navigate('/');
+      navigate('/compass');
     }
   };
-  
+
   return (
     <div className="max-w-3xl mx-auto py-8">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{opacity: 0, y: 20}}
+        animate={{opacity: 1, y: 0}}
         className="text-center mb-8"
       >
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -65,11 +68,11 @@ const Summary = () => {
           Here's a summary of your selected strategic path to achieve your business goal.
         </p>
       </motion.div>
-      
+
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{delay: 0.2}}
         ref={summaryRef}
         className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8"
       >
@@ -79,7 +82,7 @@ const Summary = () => {
           </h2>
           <p className="text-gray-700">{businessGoal}</p>
         </div>
-        
+
         <div className="mb-6 pb-6 border-b border-gray-200">
           <h2 className="text-lg font-medium text-gray-900 mb-2">
             Selected Strategy
@@ -91,7 +94,7 @@ const Summary = () => {
             {finalSelectedPath.summary}
           </p>
         </div>
-        
+
         <div className="mb-6 pb-6 border-b border-gray-200">
           <h2 className="text-lg font-medium text-gray-900 mb-4">
             Key Benefits
@@ -107,7 +110,7 @@ const Summary = () => {
             ))}
           </ul>
         </div>
-        
+
         <div>
           <h2 className="text-lg font-medium text-gray-900 mb-4">
             Recommended Next Steps
@@ -121,24 +124,23 @@ const Summary = () => {
           </ol>
         </div>
       </motion.div>
-      
+
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{delay: 0.3}}
         className="flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0"
       >
         <div className="flex space-x-4">
-          <Button 
+          <Button
             variant="secondary"
-            onClick={() => navigate('/strategic-paths')}
+            onClick={() => navigate('/compass/strategic-paths')}
             icon={FiArrowLeft}
             iconPosition="left"
           >
             Back
           </Button>
-          
-          <Button 
+          <Button
             variant="outline"
             onClick={handleStartOver}
             icon={FiRefreshCw}
@@ -147,8 +149,7 @@ const Summary = () => {
             Start Over
           </Button>
         </div>
-        
-        <Button 
+        <Button
           onClick={handleExportPDF}
           icon={FiDownload}
           iconPosition="left"
@@ -156,11 +157,11 @@ const Summary = () => {
           Export Summary
         </Button>
       </motion.div>
-      
+
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{delay: 0.4}}
         className="mt-8 p-5 bg-blue-50 rounded-lg"
       >
         <h3 className="text-sm font-medium text-blue-800 mb-2">

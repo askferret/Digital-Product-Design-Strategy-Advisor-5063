@@ -360,8 +360,8 @@ export const findWorkflowByQuestion = (question) => {
       
       const score = matchingKeywords.length / workflow.keywords.length;
       
-      // Require at least 2 keyword matches or 50% match rate
-      if ((matchingKeywords.length >= 2 || score >= 0.5) && score > bestScore) {
+      // Require at least 2 keyword matches or 40% match rate for better matching
+      if ((matchingKeywords.length >= 2 || score >= 0.4) && score > bestScore) {
         bestScore = score;
         bestMatch = workflow;
       }
@@ -376,10 +376,10 @@ export const getSuggestedQuestions = (messages) => {
   if (messages.length === 0) {
     // Initial suggestions when no conversation has happened
     return [
-      "How do we define measurable KPIs for our designs that align with business goals?",
-      "What's the most effective way to conduct a competitive design analysis?",
-      "How can we balance short-term user needs with long-term product strategy?",
-      "How should we evolve our design system to support multiple products?"
+      "How do we define measurable KPIs for our designs that meaningfully address the intersection of our business goals and user needs?",
+      "How can we track and measure the direct impact of design choices on long-term engagement, especially when user behavior is influenced by factors outside our control?",
+      "How do we ensure our designs reflect both short-term user needs and long-term product strategy, especially when both are in tension?",
+      "What's the most effective way to conduct a competitive design analysis for our healthcare platform that goes beyond just feature comparison?"
     ];
   }
 
@@ -388,7 +388,8 @@ export const getSuggestedQuestions = (messages) => {
 
   // If it's a predefined workflow and has follow-up questions, return those
   for (const workflow of Object.values(chatWorkflows)) {
-    if (workflow.responses.some(r => r.content === lastMessage.content)) {
+    if (workflow.responses && workflow.responses.length > 0 && 
+        lastMessage.content === workflow.responses[0].content) {
       return workflow.followUpQuestions;
     }
   }

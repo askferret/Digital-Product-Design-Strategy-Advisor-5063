@@ -12,7 +12,7 @@ import ChatInput from '../chat/ChatInput';
 const { FiRefreshCw, FiDownload, FiMoreHorizontal } = FiIcons;
 
 const Chat = () => {
-  const { messages, processUserMessage, isTyping, setIsTyping, clearMessages } = useChatContext();
+  const { messages, processUserMessage, isTyping, clearMessages } = useChatContext();
   const { dataSources } = useDataContext();
   const messagesEndRef = useRef(null);
   const [showActions, setShowActions] = useState(false);
@@ -38,7 +38,7 @@ const Chat = () => {
     const chatText = messages
       .map(msg => `${msg.type === 'user' ? 'You' : 'Strategic Compass'}: ${msg.content}`)
       .join('\n\n-----------------------\n\n');
-    
+
     // Create a blob and download it
     const blob = new Blob([chatText], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -61,7 +61,7 @@ const Chat = () => {
             Connected to {dataSources.length} data sources
           </p>
         </div>
-        
+
         {/* Desktop Actions */}
         <div className="hidden sm:flex space-x-2">
           <button
@@ -79,7 +79,7 @@ const Chat = () => {
             <SafeIcon icon={FiDownload} className="w-4 h-4" />
           </button>
         </div>
-        
+
         {/* Mobile Actions Menu */}
         <div className="relative sm:hidden">
           <button
@@ -121,7 +121,7 @@ const Chat = () => {
           </AnimatePresence>
         </div>
       </div>
-      
+
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
@@ -147,7 +147,7 @@ const Chat = () => {
         {isTyping && <TypingIndicator />}
         <div ref={messagesEndRef} />
       </div>
-      
+
       {/* Chat Input */}
       <ChatInput onSendMessage={handleSendMessage} />
     </div>
