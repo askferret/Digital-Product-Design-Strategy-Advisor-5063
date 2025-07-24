@@ -19,7 +19,7 @@ const Chat = () => {
   const { PERMISSIONS } = useAuthContext();
   const messagesEndRef = useRef(null);
   const [showActions, setShowActions] = useState(false);
-
+  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -92,7 +92,6 @@ const Chat = () => {
             >
               <SafeIcon icon={FiMoreHorizontal} className="w-5 h-5" />
             </button>
-
             <AnimatePresence>
               {showActions && (
                 <motion.div
@@ -128,9 +127,9 @@ const Chat = () => {
         </div>
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
           {messages.length === 0 ? (
-            <div className="text-center py-8 sm:py-12">
+            <div className="text-center py-6 sm:py-12">
               <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <SafeIcon icon={FiIcons.FiBrain} className="w-8 h-8 text-primary-600 dark:text-primary-400" />
               </div>
@@ -149,7 +148,6 @@ const Chat = () => {
               ))}
             </AnimatePresence>
           )}
-
           {isTyping && <TypingIndicator />}
           <div ref={messagesEndRef} />
         </div>

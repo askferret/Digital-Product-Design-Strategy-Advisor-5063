@@ -67,19 +67,19 @@ const AIStrategy = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-6 text-white"
+        className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-4 sm:p-6 text-white"
       >
         <div className="flex items-center space-x-3 mb-4">
           <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
             <SafeIcon icon={FiZap} className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-semibold">AI-Powered Strategic Intelligence</h2>
+          <h2 className="text-xl font-semibold">AI-Powered Intelligence</h2>
         </div>
         <p className="text-purple-100 mb-6">
           Our advanced AI analyzes patterns across your entire design ecosystem, providing actionable insights 
-          that traditional analytics miss. Get strategic recommendations backed by machine learning and predictive modeling.
+          that traditional analytics miss. Get strategic recommendations backed by machine learning.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           <div className="text-center">
             <div className="text-2xl font-bold mb-1">87%</div>
             <div className="text-sm text-purple-100">Prediction Accuracy</div>
@@ -96,13 +96,13 @@ const AIStrategy = () => {
       </motion.div>
 
       {/* Tab Navigation */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-1">
-        <div className="flex space-x-1">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-1 overflow-x-auto scrollbar-hide">
+        <div className="flex space-x-1 min-w-max">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex-1 min-w-[100px] flex items-center justify-center space-x-2 px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'bg-primary-600 text-white'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
@@ -118,7 +118,7 @@ const AIStrategy = () => {
 
       {/* Tab Description */}
       <div className="text-center">
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           {tabs.find(tab => tab.id === activeTab)?.description}
         </p>
       </div>
@@ -137,7 +137,7 @@ const AIStrategy = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700"
+        className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700"
       >
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-gray-900 dark:text-white">AI Model Performance</h3>

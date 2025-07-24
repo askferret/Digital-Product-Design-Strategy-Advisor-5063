@@ -56,7 +56,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:z-0`}
       >
-        <nav className="p-4 space-y-2">
+        <nav className="p-4 space-y-1">
           {filteredNavigation.map((item, index) => (
             <motion.div
               key={item.name}
@@ -86,6 +86,36 @@ const Sidebar = ({ isOpen, onClose }) => {
             </motion.div>
           ))}
         </nav>
+
+        {/* Mobile Bottom Nav Bar */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 lg:hidden z-40 px-2 py-2">
+          <div className="flex justify-around">
+            {filteredNavigation.slice(0, 4).map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.href}
+                onClick={() => window.innerWidth < 1024 && onClose()}
+                className={({ isActive }) =>
+                  `flex flex-col items-center py-2 px-3 rounded-lg text-xs transition-colors ${
+                    isActive
+                      ? 'text-primary-700 dark:text-primary-400'
+                      : 'text-gray-600 dark:text-gray-400'
+                  }`
+                }
+              >
+                <SafeIcon icon={item.icon} className="w-5 h-5 mb-1" />
+                <span className="text-[10px]">{item.name.split(' ')[0]}</span>
+              </NavLink>
+            ))}
+            <button
+              onClick={() => window.innerWidth < 1024 && onClose(false)}
+              className="flex flex-col items-center py-2 px-3 rounded-lg text-xs text-gray-600 dark:text-gray-400"
+            >
+              <SafeIcon icon={FiUser} className="w-5 h-5 mb-1" />
+              <span className="text-[10px]">More</span>
+            </button>
+          </div>
+        </div>
       </aside>
     </>
   );

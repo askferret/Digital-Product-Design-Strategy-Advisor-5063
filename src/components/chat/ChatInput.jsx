@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
@@ -7,12 +7,27 @@ const { FiSend, FiPaperclip } = FiIcons;
 
 const ChatInput = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
+  const textareaRef = useRef(null);
+
+  // Auto resize textarea based on content
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "44px";
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + "px";
+    }
+  }, [message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (message.trim()) {
       onSendMessage(message.trim());
       setMessage('');
+      
+      // Reset height after sending
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "44px";
+      }
     }
   };
 
@@ -37,9 +52,9 @@ const ChatInput = ({ onSendMessage }) => {
         >
           <SafeIcon icon={FiPaperclip} className="w-5 h-5" />
         </button>
-        
-        <div className="flex-1">
+        <div className="flex-1 relative">
           <textarea
+            ref={textareaRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -49,7 +64,6 @@ const ChatInput = ({ onSendMessage }) => {
             style={{ minHeight: '44px', maxHeight: '120px' }}
           />
         </div>
-        
         <button
           type="submit"
           disabled={!message.trim()}
@@ -58,7 +72,6 @@ const ChatInput = ({ onSendMessage }) => {
           <SafeIcon icon={FiSend} className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       </form>
-      
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center px-2">
         AI advisor trained on design strategy best practices for Series B startups
       </p>

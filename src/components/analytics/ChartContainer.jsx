@@ -12,7 +12,7 @@ const ChartContainer = ({ title, subtitle, children, actions = true, className =
       animate={{ opacity: 1, y: 0 }}
       className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 ${className}`}
     >
-      <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -24,13 +24,12 @@ const ChartContainer = ({ title, subtitle, children, actions = true, className =
               </p>
             )}
           </div>
-          
           {actions && (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
               <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                 <SafeIcon icon={FiDownload} className="w-4 h-4" />
               </button>
-              <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+              <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors hidden sm:block">
                 <SafeIcon icon={FiMaximize2} className="w-4 h-4" />
               </button>
               <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
@@ -40,8 +39,7 @@ const ChartContainer = ({ title, subtitle, children, actions = true, className =
           )}
         </div>
       </div>
-      
-      <div className="p-6">
+      <div className="p-4 sm:p-6 overflow-x-auto">
         {children}
       </div>
     </motion.div>

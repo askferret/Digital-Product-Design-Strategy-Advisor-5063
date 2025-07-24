@@ -28,6 +28,7 @@ const EnhancedStrategicInsightEngine = () => {
   const [selectedTimeframe, setSelectedTimeframe] = useState('30d');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [expandedInsightId, setExpandedInsightId] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
 
   // AI-powered insight generation based on multiple data sources
   const generateStrategicInsights = async () => {
@@ -225,7 +226,7 @@ const EnhancedStrategicInsightEngine = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
             <SafeIcon icon={FiBrain} className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -240,11 +241,11 @@ const EnhancedStrategicInsightEngine = () => {
           </div>
         </div>
         
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-col sm:flex-row gap-2 sm:items-center sm:space-x-3 w-full md:w-auto">
           <select
             value={selectedTimeframe}
             onChange={(e) => setSelectedTimeframe(e.target.value)}
-            className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+            className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm w-full sm:w-auto"
           >
             <option value="7d">Last 7 days</option>
             <option value="30d">Last 30 days</option>
@@ -254,7 +255,7 @@ const EnhancedStrategicInsightEngine = () => {
           <button
             onClick={generateStrategicInsights}
             disabled={isGenerating}
-            className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors text-sm"
+            className="flex items-center justify-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors text-sm w-full sm:w-auto"
           >
             <SafeIcon 
               icon={FiBrain} 
@@ -265,16 +266,38 @@ const EnhancedStrategicInsightEngine = () => {
         </div>
       </div>
 
+      {/* Mobile Filter Toggle */}
+      <div className="md:hidden">
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="flex items-center justify-between w-full px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+        >
+          <div className="flex items-center space-x-2">
+            <SafeIcon icon={FiFilter} className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Filters {selectedFilter !== 'all' && `(${selectedFilter})`}
+            </span>
+          </div>
+          <SafeIcon 
+            icon={showFilters ? FiChevronUp : FiChevronDown} 
+            className="w-4 h-4 text-gray-600 dark:text-gray-400" 
+          />
+        </button>
+      </div>
+
       {/* Filters */}
-      <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className={`${showFilters || 'hidden md:flex'} flex-wrap items-center space-x-2 overflow-x-auto pb-2 scrollbar-hide`}>
         {filters.map((filter, index) => (
           <motion.button 
             key={filter.id}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            onClick={() => setSelectedFilter(filter.id)}
-            className={`flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+            onClick={() => {
+              setSelectedFilter(filter.id);
+              setShowFilters(false);
+            }}
+            className={`flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap mb-2 md:mb-0 ${
               selectedFilter === filter.id 
                 ? 'bg-primary-600 text-white' 
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
@@ -330,8 +353,8 @@ const EnhancedStrategicInsightEngine = () => {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow"
               >
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
+                <div className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
                         <SafeIcon 
@@ -343,7 +366,7 @@ const EnhancedStrategicInsightEngine = () => {
                         <h3 className="font-semibold text-gray-900 dark:text-white">
                           {insight.title}
                         </h3>
-                        <div className="flex items-center space-x-2 mt-1">
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${getUrgencyColor(insight.urgency)}`}>
                             {insight.urgency.toUpperCase()}
                           </span>
@@ -362,7 +385,7 @@ const EnhancedStrategicInsightEngine = () => {
                     {insight.description}
                   </p>
 
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                     <div className="flex items-center space-x-4 text-sm">
                       <div>
                         <span className="text-gray-600 dark:text-gray-400">Impact: </span>
@@ -387,8 +410,8 @@ const EnhancedStrategicInsightEngine = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                       <span>Sources:</span>
                       {insight.dataSource.map((source, idx) => (
                         <span key={idx} className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded capitalize">
@@ -399,7 +422,7 @@ const EnhancedStrategicInsightEngine = () => {
                     
                     <button 
                       onClick={() => handleDiscussInChat(insight)}
-                      className="flex items-center space-x-2 text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium"
+                      className="flex items-center justify-center sm:justify-start space-x-2 text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium"
                     >
                       <SafeIcon icon={FiMessageCircle} className="w-4 h-4" />
                       <span>Discuss in Chat</span>
@@ -413,12 +436,12 @@ const EnhancedStrategicInsightEngine = () => {
                   animate={{ height: expandedInsightId === insight.id ? 'auto' : 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="px-6 pb-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60">
+                  <div className="px-4 sm:px-6 pb-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60">
                     <div className="pt-4 space-y-4">
                       {/* Metrics */}
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-white mb-2">Key Metrics</h4>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                           {Object.entries(insight.metrics).map(([key, value]) => (
                             <div key={key} className="bg-white dark:bg-gray-700 p-3 rounded-lg">
                               <div className="text-xs text-gray-600 dark:text-gray-400 capitalize">
@@ -449,7 +472,7 @@ const EnhancedStrategicInsightEngine = () => {
                       <div className="flex space-x-3 pt-2">
                         <button 
                           onClick={() => handleDiscussInChat(insight)}
-                          className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
+                          className="w-full bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
                         >
                           <SafeIcon icon={FiMessageCircle} className="w-4 h-4" />
                           <span>Discuss in Strategy Chat</span>
@@ -468,14 +491,14 @@ const EnhancedStrategicInsightEngine = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 rounded-xl p-6 border border-purple-200 dark:border-purple-800/30"
+        className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 rounded-xl p-4 sm:p-6 border border-purple-200 dark:border-purple-800/30"
       >
         <div className="flex items-center space-x-3 mb-3">
           <SafeIcon icon={FiBrain} className="w-5 h-5 text-purple-600 dark:text-purple-400" />
           <h3 className="font-semibold text-gray-900 dark:text-white">AI Learning Progress</h3>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
               {dataSources.length * 1247}
